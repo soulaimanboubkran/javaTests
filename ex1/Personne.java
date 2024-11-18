@@ -158,3 +158,76 @@ interface    IProf {
    String afficher();
  }
 
+// Classe Doctorant qui implémente les interfaces IProf et IEtudiant
+class Doctorant implements IProf, IEtudiant {
+    
+    private String cin;
+    private String nom;
+    private String prenom;
+    private String sujetThese;
+    private int heuresTravauxPratiques;
+
+    // Constructeur de la classe Doctorant
+    public Doctorant(String cin, String nom, String prenom, String sujetThese, int heuresTravauxPratiques) {
+        this.cin = cin;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.sujetThese = sujetThese;
+        this.heuresTravauxPratiques = heuresTravauxPratiques;
+    }
+
+   
+ @Override
+    public String afficher() {
+       return  cin;
+      // System.out.println("Nom: " + nom);
+      // System.out.println("Prénom: " + prenom);
+      // System.out.println("Sujet de la thèse: " + sujetThese);
+      // System.out.println("Heures de travaux pratiques: " + heuresTravauxPratiques);
+    }
+
+    // Accesseurs (getters)
+    public String getCIN() {
+        return cin;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getSujetThese() {
+        return sujetThese;
+    }
+
+    public int getHeuresTravauxPratiques() {
+        return heuresTravauxPratiques;
+    }
+
+    // Mutateurs (setters)
+    public void setSujetThese(String sujetThese) {
+        this.sujetThese = sujetThese;
+    }
+
+    public void setHeuresTravauxPratiques(int heuresTravauxPratiques) {
+        this.heuresTravauxPratiques = heuresTravauxPratiques;
+    }
+
+
+    @Override
+    public void absence() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'absence'");
+    }
+
+
+    @Override
+    public double calculerSalaire() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'calculerSalaire'");
+    }
+
+}
