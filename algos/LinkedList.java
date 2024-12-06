@@ -213,14 +213,41 @@ public class LinkedList {
         length++;
         return head;
     }
+    public boolean detectCycle(){
+        if (head == null) {
+            return false; // Empty list cannot have a loop
+        }
+
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;         // Move slow pointer by 1 step
+            fast = fast.next.next;    // Move fast pointer by 2 steps
+            if (slow == fast) {
+                return true;          // Loop detected
+            }
+        }
+        return false;  
+    }
+    //Floyd's Algorithm
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
 
-        list.add(1); // Add 10 at position 1
-        list.add(2); // Add 20 at position 2
-        list.add(3); // Add 15 at position 2 (shifts 20 to position 3)
-        list.add(6); // Add 5 at position 1 (shifts all elements)
-
+         // Create a linked list
+         list.add(1);
+         list.add(2);
+         list.add(3);
+         list.add(4);
+ 
+         // Introduce a loop for testing (e.g., 4 -> 2)
+        // list.head.next.next.next.next = list.head.next;
+ 
+         // Detect cycle
+         if (list.detectCycle()) {
+             System.out.println("Cycle detected in the linked list.");
+         } else {
+             System.out.println("No cycle in the linked list.");
+         }
         // Reverse the list and update the head
         // list.head = list.reverse();
         // System.out.println(length);
@@ -230,7 +257,7 @@ public class LinkedList {
         //list.removeDup();
         //list.addInSorted(new Node(7));
         //System.out.println(length);
-        list.display();
+        //list.display();
 
     }
 
