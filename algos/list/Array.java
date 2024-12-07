@@ -1,4 +1,4 @@
-package algos;
+package algos.list;
 class Array {
     public static int[] reverse(int[] nums) {
         int start = 0;

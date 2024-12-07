@@ -1,4 +1,4 @@
-package algos;
+package algos.list;
 import java.util.HashSet;
 public class LinkedList {
     static class Node {
@@ -304,7 +304,7 @@ public class LinkedList {
         System.out.println(list2.length);
 
         // Merge the two lists
-        Node mergedList = list1.mergeTow(list1.head, list2.head);
+        Node mergedList = LinkedList.mergeTow(list1.head, list2.head);
 
         // Display the merged list
         System.out.print("Merged List: ");
