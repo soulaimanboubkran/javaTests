@@ -17,7 +17,7 @@ public class LinkedList {
     }
 
     private Node head;
-    private static int length;
+    private  int length;
 
     public void add(int data) {
         Node newNode = new Node(data); // Create a new node
@@ -213,6 +213,8 @@ public class LinkedList {
         length++;
         return head;
     }
+
+
     public boolean detectCycle(){
         if (head == null) {
             return false; // Empty list cannot have a loop
@@ -224,30 +226,99 @@ public class LinkedList {
             slow = slow.next;         // Move slow pointer by 1 step
             fast = fast.next.next;    // Move fast pointer by 2 steps
             if (slow == fast) {
+                getStartingNode(slow);
                 return true;          // Loop detected
             }
         }
         return false;  
     }
+
+    public Node getStartingNode(Node slow){
+        Node temp = head;
+        while(temp != slow){
+            temp = temp.next;
+            slow = slow.next;
+        }
+        return temp;
+    }
+    
+    public void removeLoop(Node slow){
+        Node temp = head;
+        while(temp.next != slow.next){
+            temp = temp.next;
+            slow = slow.next;
+        }
+       slow.next = null;
+    }
+
+    public static Node mergeTow(Node a,Node b){
+        Node node = new Node(0);
+        Node tail = node;
+
+        while(a != null && b != null){
+            if(a.data <= b.data){
+                tail.next = a;
+                a = a.next;
+              
+            }else{
+                tail.next = b;
+                b = b.next;
+            } 
+            tail = tail.next;
+           
+        }
+        if(a == null){
+            tail.next = b;
+      
+        }else{
+            tail.next = a;
+        
+        }
+     
+        return node.next;
+    }
+    
     //Floyd's Algorithm
     public static void main(String[] args) {
-        LinkedList list = new LinkedList();
+        LinkedList list1 = new LinkedList();
+        LinkedList list2 = new LinkedList();
 
-         // Create a linked list
-         list.add(1);
-         list.add(2);
-         list.add(3);
-         list.add(4);
- 
+        // Add elements to the first list
+        list1.add(1);
+        list1.add(3);
+        list1.add(5);
+        list1.add(7);
+        list1.add(22);
+
+        // Add elements to the second list
+        list2.add(2);
+        list2.add(4);
+        list2.add(6);
+
+        // Display the original lists
+        System.out.print("List 1: ");
+        list1.display();
+        System.out.println(list1.length);
+        System.out.print("List 2: ");
+        list2.display();
+        System.out.println(list2.length);
+
+        // Merge the two lists
+        Node mergedList = list1.mergeTow(list1.head, list2.head);
+
+        // Display the merged list
+        System.out.print("Merged List: ");
+        while (mergedList != null) {
+            System.out.print(mergedList.data + " ");
+            mergedList = mergedList.next;
+        }
+        System.out.println();
+        System.out.println("Length of this merged list is: " + (list1.length + list2.length));
+
          // Introduce a loop for testing (e.g., 4 -> 2)
         // list.head.next.next.next.next = list.head.next;
  
-         // Detect cycle
-         if (list.detectCycle()) {
-             System.out.println("Cycle detected in the linked list.");
-         } else {
-             System.out.println("No cycle in the linked list.");
-         }
+        
         // Reverse the list and update the head
         // list.head = list.reverse();
         // System.out.println(length);
