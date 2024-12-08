@@ -1,7 +1,7 @@
 package algos.list;
 import java.util.HashSet;
 public class LinkedList {
-    static class Node {
+    private static class Node {
         int data;
         Node next;
 
