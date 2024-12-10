@@ -64,4 +64,18 @@ public class CircularLinkedList {
     }
     length++;
  }
+
+ public void deleteFirst(){
+   if (isEmpty()) {
+      return;
+   }
+   Node temp = last.next;
+   if(last.next == last){
+      last = null;
+   }else{
+      last.next = temp.next;
+   }
+   temp.next = null;
+   length--;
+ }
 }
