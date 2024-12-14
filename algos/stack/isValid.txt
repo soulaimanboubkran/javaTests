@@ -1,0 +1,21 @@
+How It Works
+Initialization:
+
+A generic Stack<Character> is initialized to keep track of opening brackets.
+Iterate Through the String:
+
+The method iterates over each character in the input string s.
+Push Opening Brackets:
+
+If the character is an opening bracket ((, {, [), it is pushed onto the stack.
+Check Closing Brackets:
+
+If the character is a closing bracket (), }, ]):
+Check if the stack is empty. If it is, the string is invalid because there’s no corresponding opening bracket.
+Otherwise, compare the top of the stack (the last pushed opening bracket) with the current closing bracket:
+If the pair matches (e.g., ()), pop the stack.
+If it doesn’t match, return false.
+Final Check:
+
+After processing all characters, if the stack is empty, the string is valid (all opening brackets had matching closing brackets).
+If not, return false.
