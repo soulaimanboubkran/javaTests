@@ -11,13 +11,13 @@ public class NextGreater {
         }
 
         int[] result = new int[arr.length];
-        Stack stack = new Stack(); // Assuming Stack implementation is available
+        Stack<Integer> stack = new Stack<>(); // Assuming Stack implementation is available
 
         // Traverse the array from right to left
         for (int i = arr.length - 1; i >= 0; i--) {
             // Remove elements from stack that are less than or equal to current element
             while (!stack.isEmpty() && stack.peek() <= arr[i]) {
-                stack.pop();
+                stack.pop();   
             }
 
             // If stack is empty, no greater element exists
