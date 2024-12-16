@@ -5,7 +5,8 @@ public class Queue<T> {
     private Node<T> rear;
     private int length;
 
-    private class  Node<T> {
+  
+    private class  Node<T>{
         private T data;
         private Node<T> next;
 
