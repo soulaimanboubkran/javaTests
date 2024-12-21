@@ -36,6 +36,26 @@ public class BinaryTree<T> {
             }
         }
     }
+    // in order is from the lef left to root to lef right
+    public void inOrder() {
+        if (root == null) {
+           return;
+        }
+  
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode temp = root;
+  
+        while (!stack.isEmpty() || temp != null) {
+           if (temp != null) {
+              stack.push(temp);
+              temp = temp.left;
+           } else {
+              temp = stack.pop();
+              System.out.print(temp.data + " ");
+              temp = temp.right;
+           }
+        }
+     }
 
     // Adds a root node to the tree
     public void addRoot(T data) {
@@ -71,5 +91,8 @@ public class BinaryTree<T> {
         bt.createSampleBinaryTree();
         System.out.println("Pre-order traversal:");
         bt.preOrder();
+        System.out.println("");
+        System.out.println("In-order traversal:");
+        bt.inOrder();
     }
 }
