@@ -1,0 +1,59 @@
+The three tree traversal techniques you provided differ in the order they visit the nodes of a binary tree:
+
+---
+
+### **1. Pre-order Traversal (Root → Left → Right)**
+In pre-order traversal, the sequence is:
+1. Visit the **root node** first.
+2. Recursively traverse the **left subtree**.
+3. Recursively traverse the **right subtree**.
+
+For your example:
+- **Pre-order Traversal**: `1 2 4 5 3 6 7`
+
+---
+
+### **2. In-order Traversal (Left → Root → Right)**
+In in-order traversal, the sequence is:
+1. Recursively traverse the **left subtree**.
+2. Visit the **root node**.
+3. Recursively traverse the **right subtree**.
+
+For your example:
+- **In-order Traversal**: `4 2 5 1 6 3 7`
+
+---
+
+### **3. Post-order Traversal (Left → Right → Root)**
+In post-order traversal, the sequence is:
+1. Recursively traverse the **left subtree**.
+2. Recursively traverse the **right subtree**.
+3. Visit the **root node** last.
+
+For your example:
+- **Post-order Traversal**: `4 5 2 6 7 3 1`
+
+---
+
+### Differences in Sequence
+- **Pre-order** starts with the root and processes each node before its subtrees.
+- **In-order** processes the left subtree, then the root, and finally the right subtree. This traversal gives a sorted sequence for binary search trees (BSTs).
+- **Post-order** processes all subtrees before visiting the root, making it useful for operations where subtrees need to be processed before the root (e.g., tree deletion).
+
+---
+
+### Visual Representation of the Tree
+The sequences suggest the following binary tree:
+
+```
+        1
+      /   \
+     2     3
+    / \   / \
+   4   5 6   7
+```
+
+**Traversals from this tree**:
+- **Pre-order**: Visit root (`1`), left subtree (`2, 4, 5`), then right subtree (`3, 6, 7`).
+- **In-order**: Leftmost subtree (`4, 2, 5`), root (`1`), then right subtree (`6, 3, 7`).
+- **Post-order**: Left subtree (`4, 5, 2`), right subtree (`6, 7, 3`), then root (`1`).

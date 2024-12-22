@@ -2,6 +2,10 @@ package algos.tree;
 
 import java.util.Stack;
 
+import java.util.LinkedList;
+
+import java.util.Queue;
+
 public class BinaryTree<T> {
     private TreeNode root;
 
@@ -41,7 +45,7 @@ public class BinaryTree<T> {
         if (root == null) {
            return;
         }
-  
+      
         Stack<TreeNode> stack = new Stack<>();
         TreeNode temp = root;
   
@@ -56,7 +60,50 @@ public class BinaryTree<T> {
            }
         }
      }
+     public void postOrder(){
+        TreeNode current = root;
+        Stack<TreeNode> stack = new Stack<>();
 
+        while(current != null || !stack.isEmpty()){
+            if(current != null){
+                stack.push(current);
+                current = current.left;
+            }else {
+                TreeNode temp = stack.peek().right;
+                if(temp == null){
+                    temp = stack.pop();
+                    System.out.print(temp.data + " ");
+                    while(!stack.isEmpty() && temp == stack.peek().right){
+                        temp = stack.pop();
+                        System.out.print(temp.data + " ");
+                    }
+                }else{
+                    current = temp;
+                }
+            }
+        }
+     }
+
+
+     public void levelOrder(){
+        if (root == null) {
+            return;
+         }
+         Queue<TreeNode> queue = new LinkedList<>();
+         queue.offer(root);
+         while(!queue.isEmpty()){
+            TreeNode temp= queue.poll();
+            System.out.print(temp.data + " ");
+            if(temp.left != null){
+                queue.offer(temp.left); 
+            }
+            if(temp.right != null){
+                queue.offer(temp.right); 
+            }
+
+                 }
+         
+     }
     // Adds a root node to the tree
     public void addRoot(T data) {
         root = new TreeNode(data);
@@ -94,5 +141,11 @@ public class BinaryTree<T> {
         System.out.println("");
         System.out.println("In-order traversal:");
         bt.inOrder();
+        System.out.println("");
+        System.out.println("Post-order traversal:");
+        bt.postOrder();
+        System.out.println("");
+        System.out.println("level-Order :");
+        bt.levelOrder();
     }
 }
