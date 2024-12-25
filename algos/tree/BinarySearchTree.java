@@ -61,14 +61,34 @@ public class BinarySearchTree<T extends Number & Comparable<T>> {
         }
     }
 
+    public boolean isValid() {
+        return isValid(root, null, null);
+    }
+
+    private boolean isValid(TreeNode node,T min,T max){
+        if (node == null) {
+            return true;
+        }
+        if((min != null && node.data.doubleValue() <= min.doubleValue()) ||
+        (max != null && node.data.doubleValue() >= max.doubleValue())
+
+        ){
+            return false;
+        }
+
+        return isValid(node.left,min,node.data) &&
+               isValid(node.right,node.data,max);
+    }
+
     public static void main(String[] args) {
         BinarySearchTree<Integer> bst = new BinarySearchTree<>();
         bst.insert(4);
         bst.insert(3);
         bst.insert(6);
-        bst.insert(2);
+        bst.insert(7);
 
         bst.inOrder(); // Outputs: 2 3 4 6
+        System.out.println("\nIs the tree valid? " + bst.isValid()); // Should output: true
 
         if (bst.search(2) != null) {
             System.out.println("\nKey was found!");
