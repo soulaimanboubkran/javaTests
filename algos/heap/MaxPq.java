@@ -25,6 +25,8 @@ public class MaxPq {
         swim(n);
     }
 
+
+
     private void swim(int k){
         while(k > 1 && heap[k/2] < heap[k]){
             int temp = heap[k];
@@ -47,6 +49,35 @@ public class MaxPq {
         heap = temp;
     }
 
+    private void swap(int i, int j) {
+        int temp = heap[i];
+        heap[i] = heap[j];
+        heap[j] = temp;
+    }
+    public int deleteMax(){
+        if (isEmpty()) {
+            throw new IllegalStateException("Heap is empty");
+        }
+        int max = heap[1];
+        swap(1,n);
+        n--;
+        sink(1);
+        return max;
+    }
+    private void sink(int k) {
+        while (2 * k <= n) {
+            int j = 2 * k; // Left child
+            if (j < n && heap[j] < heap[j + 1]) { // Compare left and right children
+                j++;
+            }
+            if (heap[k] >= heap[j]) {
+                break; // Heap order is satisfied
+            }
+            swap(k, j);
+            k = j; // Continue sinking
+        }
+    }
+
     public static void main(String[] args) {
         MaxPq pq = new MaxPq(3);
         pq.insert(4);
@@ -55,7 +86,13 @@ public class MaxPq {
         pq.insert(6);
         pq.insert(1);
         pq.insert(3);
-        System.out.println(pq.size());
+        System.out.println("Heap size: " + pq.size());
         pq.printMaxHeap();
-     }
+
+        System.out.println("Deleted max: " + pq.deleteMax());
+        pq.printMaxHeap();
+
+        System.out.println("Deleted max: " + pq.deleteMax());
+        pq.printMaxHeap();
+    }
 }
