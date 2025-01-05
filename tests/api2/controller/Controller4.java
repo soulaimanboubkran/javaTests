@@ -4,6 +4,8 @@ package tests.api2.controller;
 
 
 public class Controller4 {
+
+    //Purpose: This method creates and returns a string consisting of the character caractere repeated nbrefois times.
     public static  String build(char caractere,int nbrefois)
     {
         
