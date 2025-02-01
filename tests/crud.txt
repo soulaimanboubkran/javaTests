@@ -1,0 +1,153 @@
+Here are the CRUD functions clearly displayed:  
+
+### **Create (Ajouter)**
+```java
+private void bt_AjauterMouseClicked(java.awt.event.MouseEvent evt) {                                        
+    try {
+        String Matricule = txtmatricule.getText();
+        String Nom = txtnom.getText();
+        float Notemoyenne = Float.parseFloat(txtmoyenne.getText());
+        String Sexe = String.valueOf(cb_sexe.getSelectedItem());
+
+        // Vérifier que les informations sont bien saisies
+        if (!txtmatricule.getText().isEmpty() &&
+            !txtnom.getText().isEmpty() &&
+            (Sexe.equals("M") || Sexe.equals("F")) &&
+            !txtmoyenne.getText().isEmpty()) {
+            
+            if (Notemoyenne >= 0 && Notemoyenne <= 20) {
+                Etudiant etd = new Etudiant(Matricule, Nom, Notemoyenne, Sexe);
+                etudiant.add(etd);
+            } else {
+                JOptionPane.showMessageDialog(this, "La note doit être comprise entre 0 et 20");
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Veuillez confirmer les informations !");
+    }
+
+    afficher_list();
+    reset();
+}
+```
+
+---
+
+### **Read (Afficher la Liste)**
+```java
+public void afficher_list() {
+    try {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Effacer le tableau avant de le remplir
+
+        for (Etudiant etd : etudiant) {
+            model.addRow(new Object[]{
+                etd.getMatricule(),
+                etd.getNom(),
+                etd.getSexe(),
+                etd.getNotemoyenne()
+            });
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erreur lors de l'affichage de la liste !");
+    }
+}
+```
+
+---
+
+### **Update (Modifier)**
+```java
+private void bt_modifierActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    try {
+        for (Etudiant e : etudiant) {
+            if (e.getMatricule().equals(txtmatricule.getText())) {
+                if (JOptionPane.showConfirmDialog(this, "Voulez-vous valider la modification ?", 
+                    "Confirmation", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    
+                    e.setNom(txtnom.getText());
+                    e.setSexe(String.valueOf(cb_sexe.getSelectedItem()));
+                    e.setNotemoyenne(Float.parseFloat(txtmoyenne.getText()));
+                }
+                break;
+            }
+        }
+
+        afficher_list();
+        reset();
+        bt_modifier.setEnabled(false);
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Veuillez confirmer les informations !");
+    }
+}
+```
+
+---
+
+### **Delete (Supprimer)**
+```java
+private void bt_SuprimerMouseClicked(java.awt.event.MouseEvent evt) {                                        
+    Iterator<Etudiant> it = etudiant.iterator();
+
+    try {
+        while (it.hasNext()) {
+            Etudiant etd = it.next();
+
+            if (etd.getMatricule().equals(txtmatricule.getText())) {
+                if (JOptionPane.showConfirmDialog(this, "Voulez-vous supprimer l'étudiant ?", 
+                    "Confirmation", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    
+                    it.remove(); // Supprimer l'étudiant de la liste
+                }
+                break;
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Veuillez saisir le matricule de l'étudiant !");
+    }
+
+    afficher_list();
+}
+```
+
+---
+
+### **Search (Trouver un étudiant)**
+```java
+private void bt_Trouver(java.awt.event.ActionEvent evt) {                                        
+    try {
+        String matricule = txtmatricule.getText().trim();
+
+        if (matricule.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Veuillez saisir le matricule !");
+            return;
+        }
+
+        boolean found = false;
+
+        for (Etudiant e : etudiant) {
+            if (e.getMatricule().equals(matricule)) {
+                txtnom.setText(e.getNom());
+                cb_sexe.setSelectedItem(e.getSexe());
+                txtmoyenne.setText(String.valueOf(e.getNotemoyenne()));
+                bt_modifier.setEnabled(true);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Étudiant non trouvé !");
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Une erreur est survenue !");
+        e.printStackTrace();
+    }
+}
+```
+
+---
+
+Now, you have all your CRUD functions properly displayed! Let me know if you need any modifications. 🚀
