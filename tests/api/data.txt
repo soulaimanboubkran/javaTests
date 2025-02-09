@@ -1,7 +1,0 @@
-John Doe,New York,25
-Jane Smith,Los Angeles,30
-Emily Davis,Chicago,22
-Michael Brown,Houston,28
-Sophia Johnson,Phoenix,26
-null,null,null
-null,null,null
