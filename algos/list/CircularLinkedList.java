@@ -1,7 +1,5 @@
 package algos.list;
 
-import java.lang.classfile.components.ClassPrinter.ListNode;
-
 public class CircularLinkedList {
     private Node last;
     private int length;
