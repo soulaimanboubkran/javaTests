@@ -77,6 +77,51 @@ public class Arraysds {
         return rotated;
     }
 
+    public static List<Integer> matchingStrings(List<String> stringList, List<String> queries) {
+       // Step 1: Store frequencies in a HashMap
+         HashMap<String,Integer> map = new HashMap<>();
+        for(String s:stringList){
+            map.put(s,map.getOrDefault(s, 0)+1);
+
+        }
+         // Step 2: Process each query using the map
+        List<Integer> result = new ArrayList<>();
+        for(String q : queries){
+            result.add(map.getOrDefault(q,0));
+        }
+        
+
+
+        return result;
+        }
+
+        public static long arrayManipulation(int n, List<List<Integer>> queries) {
+            long[] arr = new long[n + 1]; // Using long to avoid integer overflow
+
+            // it adds the value of k to the element at index a and subtracts k from the element at index b + 1 ,
+            //sow after then when we do sum we know the value of k is added to all the elements from a to b
+            for(List<Integer> query : queries) {
+                int a = query.get(0);
+                int b = query.get(1);
+                int k = query.get(2);
+
+                arr[a] += k;
+                if(b + 1 <= n) {
+                    arr[b + 1] -= k;
+                }
+
+                
+            }
+              // Compute prefix sum and track max value
+            long max = 0, sum = 0;
+            for(int i = 1; i <= n; i++) {
+                sum += arr[i];
+                max = Math.max(max, sum);
+            }
+        
+            return max;
+        }    
+
     public static void main(String[] args) {
         List<Integer> testArray = Arrays.asList(1, 2, 3, 4, 5);
         List<Integer> reversedArray = reverseArray(new ArrayList<>(testArray));
@@ -100,5 +145,25 @@ public class Arraysds {
         int d = 2;
         System.out.println(rotateLeft(d, arr));
 
+
+         // Sample Input with duplicates
+         List<String> stringList = Arrays.asList("abc", "abc", "xyz", "abc", "xyz", "def");
+         List<String> queries = Arrays.asList("abc", "xyz", "def", "ghi");
+ 
+         // Call function
+         List<Integer> output = matchingStrings(stringList, queries);
+         
+         // Print result
+         for (int count : output) {
+             System.out.println(count);
+         }
+
+         int n = 5;
+         List<List<Integer>> queries2 = new ArrayList<>();
+         queries2.add(Arrays.asList(1, 2, 100));
+         queries2.add(Arrays.asList(2, 5, 100));
+         queries2.add(Arrays.asList(3, 4, 100));
+ 
+         System.out.println(arrayManipulation(n, queries2)); // Output: 200
     }
 }
