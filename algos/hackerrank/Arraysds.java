@@ -121,7 +121,57 @@ public class Arraysds {
         
             return max;
         }    
+        //Contiguous Array 
+        public int findMaxLength(int[] nums){
+            HashMap<Integer, Integer> map = new HashMap<>();
+            map.put(0, -1);//initialize the map with 0 at index -1
+            int max_length = 0, count = 0;
 
+            for(int i = 0; i< nums.length ; i++){
+                count  += (nums[i] == 0) ? -1 :1;
+                if(map.containsKey(count)){
+                    max_length = Math.max(max_length, i - map.get(count));
+                    // i - map.get(count) is the length of the subarray map.get(count) is the index of the first occurence of count
+
+                }else{
+                    map.put(count, i);
+                }
+            }
+            return max_length;
+
+        }
+        //Array Partition max sum of min of pairs
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for(int i = 0 ; i < nums.length; i+=2){
+            sum += nums[i];
+        }
+        return sum;
+    }
+
+    
+    // Array Nesting: Find the longest length of a nested set.
+    // We loop through the array and explore cycles by following the indices.
+    // To avoid revisiting elements, we mark them as -1 once processed.
+    // If we encounter a visited element (-1), we skip it.
+    // After processing a cycle, we update maxLen if the current cycle is longer.
+    public int arrayNested(int[] nums){
+        int maxLen = 0;
+        for(int i = 0 ; i<nums.length ; i++){
+            if (nums[i] == -1) continue; // Skip visited elements
+
+          int start = nums[i], count = 0;   
+          while(nums[start] != -1){
+            int temp = start;
+            start = nums[start];
+            nums[temp] = -1;
+            count++;
+          }
+            maxLen = Math.max(maxLen, count);
+        }
+        return maxLen;
+    }
     public static void main(String[] args) {
         List<Integer> testArray = Arrays.asList(1, 2, 3, 4, 5);
         List<Integer> reversedArray = reverseArray(new ArrayList<>(testArray));
