@@ -154,7 +154,7 @@ public class LinkedList {
         Node next = null;
 
         while (current != null) {
-            next = current.next;
+            next = current.next;//temp storing the next node sow we can move to the next node
             current.next = prev; // means making it null sow it become out of the list
             prev = current;
             current = next;
