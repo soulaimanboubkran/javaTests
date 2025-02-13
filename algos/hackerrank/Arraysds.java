@@ -185,6 +185,11 @@ public class Arraysds {
         }
         return false;
     }
+
+    // Anagram: Check if two strings are anagrams of each other
+    // We use a HashMap to store the frequency of characters in the first string.
+    // Then we reduce the frequency of characters using the second string.
+    // If the frequency of a character becomes zero, we remove it from the map.so if the map is empty then the strings are anagrams
     public static boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
             return false;
@@ -212,6 +217,41 @@ public class Arraysds {
 
         return true;
     }
+    public static boolean isAnagram2(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        char[] sChars = s.toCharArray();
+        char[] tChars = t.toCharArray();
+         Arrays.sort(sChars);
+        Arrays.sort(tChars);
+        return Arrays.equals(sChars, tChars);
+    }
+
+    // Group Anagrams: Group anagrams together
+    // We sort each string and use the sorted string as a key in a HashMap.
+    // The value is a list of anagrams that match the key.
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> result  = new ArrayList<>();
+        HashMap<String,List<String>> map = new HashMap<>();
+
+        for(String s : strs){
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            if(map.containsKey(key)){
+                map.get(key).add(s);
+            }else{
+                List<String> strList = new ArrayList<>();
+                strList.add(s);
+                map.put(key, strList);
+            }
+        }
+        result.addAll(map.values());
+        return result;
+    }
 
     // we use the complement of the current element to find the other element that sums up to the target
     // in math we have a + b = c, we can rewrite it as b = c - a
@@ -231,6 +271,37 @@ public class Arraysds {
 
 
         return new int[0];
+    }
+
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int num :nums){
+            map.put(num,map.getOrDefault(num,0 )+1);
+        }
+        
+        Map<Integer,List<Integer>> freqMap = new HashMap<>();
+        for(Integer num : map.keySet()){
+            Integer freq = map.get(num);
+            if(!freqMap.containsKey(freq)){
+                freqMap.put(freq, new ArrayList<>());
+            }
+            freqMap.get(freq).add(num);
+        }
+        int[] result = new int[k];
+        for(Integer n = nums.length; n >= 0; n--){
+            if(freqMap.containsKey(n)){
+                List<Integer> list = freqMap.get(n);
+                for(int num : list){
+                    if(k == 0){ 
+                        return result;
+                    }
+                    result[k-1] = num;
+                    k--;
+                }
+            }
+        }
+        return result;
+
     }
     public static void main(String[] args) {
         List<Integer> testArray = Arrays.asList(1, 2, 3, 4, 5);
