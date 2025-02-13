@@ -172,6 +172,66 @@ public class Arraysds {
         }
         return maxLen;
     }
+
+
+    public static boolean containsDuplicate(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for(int i = 0 ; i < nums.length ; i++){
+            if(set.contains(nums[i])){
+                return true;
+            }
+            set.add(nums[i]);
+            
+        }
+        return false;
+    }
+    public static boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        // Count frequency of characters in s
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);  // Use charAt instead of substring
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        // Reduce frequency of characters using t
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);  // Use charAt instead of substring
+            if (!map.containsKey(c)) {
+                return false;
+            }
+            map.put(c, map.get(c) - 1);
+            if (map.get(c) == 0) {
+                map.remove(c);
+            }
+        }
+
+        return true;
+    }
+
+    // we use the complement of the current element to find the other element that sums up to the target
+    // in math we have a + b = c, we can rewrite it as b = c - a
+    public static int[] twoSum(int[] nums, int target) {
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length ; i++){
+            int complement = target - nums[i];
+            if(map.containsKey(complement)){
+                return new int[]{
+                    map.get(complement),i
+                };
+            }
+
+            map.put(nums[i], i);
+        }
+
+
+        return new int[0];
+    }
     public static void main(String[] args) {
         List<Integer> testArray = Arrays.asList(1, 2, 3, 4, 5);
         List<Integer> reversedArray = reverseArray(new ArrayList<>(testArray));
@@ -215,5 +275,8 @@ public class Arraysds {
          queries2.add(Arrays.asList(3, 4, 100));
  
          System.out.println(arrayManipulation(n, queries2)); // Output: 200
+
+  
+         System.out.println(containsDuplicate(new int[]{1,2,3,1}));
     }
 }
