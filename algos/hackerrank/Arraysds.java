@@ -1,5 +1,6 @@
 package algos.hackerrank;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Arraysds {
@@ -303,6 +304,105 @@ public class Arraysds {
         return result;
 
     }
+
+    public static  String encode(List<String> strs){
+        StringBuilder encoded = new StringBuilder();
+        for(String s : strs){
+            encoded.append(s.length()).append('/').append(s);
+        }
+        return encoded.toString();
+    }
+
+    public static List<String> decode(String s) {
+        List<String> result = new ArrayList<>();
+        int i = 0;
+
+        while (i < s.length()) {
+            // Find the '/' separator
+            int j = i;
+            while (s.charAt(j) != '/') {
+                j++;
+            }
+
+            // Extract the length of the next string
+            int length = Integer.parseInt(s.substring(i, j));
+            i = j + 1; // Move past '/'
+
+            // Extract the actual string
+            result.add(s.substring(i, i + length));
+            i += length; // Move to the next encoded string
+        }
+
+        return result;
+    }
+
+    public static int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] output = new int[n];
+
+        output[0] = 1;
+        // Calculate the product of all elements to the left of i  Compute prefix product
+        for(int i =1;i < n; i++){
+            output[i] = output[i-1] * nums[i-1];
+        }
+        // Calculate the product of all elements to the right of i  Compute suffix product and multiply with prefix product 
+        int right = 1;
+        for(int i= n-1 ; i>=0 ; i--){
+            output[i] *= right;
+            right = right * nums[i];
+        }
+        return output;
+    }
+
+    public static boolean isValidSudoku(char[][] board) {
+        HashSet<Integer> seen = new HashSet<>();
+        for(int i = 0; i < 9 ; i++){
+            for(int j = 0; j < 9 ; j++){
+                if(board[i][j]  != '.'){
+                    int current = board[i][j] - '0';
+// we add the current element to the set with the row, column and box it belongs to
+// sow if we find the same element in the same row, column or box we return false , the set will not add the element if it already exists it w
+// will return false
+                   // Unique encoding using bit shifts ,sinc we do not use string concatenation that was been ensuring the uniqueness of the key
+                   int rowKey = (current * 100) + i;      // Encodes (current, row)
+                   int colKey = (current * 1000) + j;     // Encodes (current, column)
+                   int boxKey = (current * 10000) + (i / 3) * 10 + (j / 3); // Encodes (current, box)
+
+                   // If any value already exists, return false
+                   if (!seen.add(rowKey) || !seen.add(colKey) || !seen.add(boxKey)) {
+                       return false;
+                   }
+
+                }
+            }}
+            return true;
+    }
+    public static  int longestConsecutive(int[] nums) {
+        if(nums.length == 0) return 0;
+        HashSet<Integer> set = new HashSet<>();
+        for(int num : nums){
+            set.add(num);
+        }
+
+        int max = 0;
+        for(int num : set){
+            // if the set does not contain the number - 1 then we know that the number is the start of the sequence
+            // it does not need to be sorted cause it looks for every number in the set
+            if(!set.contains(num - 1)){
+                int current = num;
+                
+                int currentSequence = 1;
+                while(set.contains(current + 1)){
+                    current++;
+                    currentSequence++;
+                }
+                max = Math.max(max, currentSequence);
+            }
+
+
+        }
+        return max;
+    }
     public static void main(String[] args) {
         List<Integer> testArray = Arrays.asList(1, 2, 3, 4, 5);
         List<Integer> reversedArray = reverseArray(new ArrayList<>(testArray));
@@ -349,5 +449,18 @@ public class Arraysds {
 
   
          System.out.println(containsDuplicate(new int[]{1,2,3,1}));
+
+         List<String> testStrings = Arrays.asList("hello", "world", "this/is/a/test", "123");
+
+         // Encoding
+         String encoded = encode(testStrings);
+         System.out.println("Encoded: " + encoded);
+ 
+         // Decoding
+         List<String> decoded = decode(encoded);
+         System.out.println("Decoded: " + decoded);
+ 
+         // Verify correctness
+         System.out.println("Test Passed: " + testStrings.equals(decoded));
     }
 }
