@@ -388,9 +388,9 @@ public class Arraysds {
         for(int num : set){
             // if the set does not contain the number - 1 then we know that the number is the start of the sequence
             // it does not need to be sorted cause it looks for every number in the set
-            if(!set.contains(num - 1)){
+            if(!set.contains(num - 1) ){
                 int current = num;
-                
+                // set this one to 1 every time we find a sequence  sow it can be compared to the max 
                 int currentSequence = 1;
                 while(set.contains(current + 1)){
                     current++;
@@ -403,6 +403,42 @@ public class Arraysds {
         }
         return max;
     }
+
+    public static int findLengthOfLCIS(int[] nums) {
+        if (nums.length == 0) return 0; // Edge case
+    
+        int max = 1;  // At least one number exists, so the sequence length is at least 1
+        int currentSequence = 1;
+    
+        for (int i = 0; i < nums.length - 1; i++) {  // Loop up to second-last element
+            if (nums[i] < nums[i + 1]) {  // Increasing sequence
+                currentSequence++;
+            } else {  // Sequence breaks
+                max = Math.max(max, currentSequence);
+                currentSequence = 1;  // Reset counter for the new sequence
+            }
+        }
+    
+        return Math.max(max, currentSequence); // Ensure we account for the last sequence
+    }
+
+   public static int  numberOfArithmeticSlices(int[] A) {
+
+    if(A.length < 3) return 0;
+    int count = 0, sum = 0;
+    for(int i = 2 ; i < A.length ; i++){
+        // check if the difference between the current element and the previous element is the same as the difference between the previous element and the element before it
+        //for the first 3 elements of every sequence we add 1 to the count and add the count to the sum
+        if(A[i]- A[i-1] == A[i-1] - A[i-2]){
+            count++;
+            sum += count;
+    }else{
+        count = 0;
+    }
+    }
+    return sum;
+   }
+
     public static void main(String[] args) {
         List<Integer> testArray = Arrays.asList(1, 2, 3, 4, 5);
         List<Integer> reversedArray = reverseArray(new ArrayList<>(testArray));
@@ -462,5 +498,14 @@ public class Arraysds {
  
          // Verify correctness
          System.out.println("Test Passed: " + testStrings.equals(decoded));
+
+System.out.println(findLengthOfLCIS(new int[]{1, 3, 5, 4, 7})); // Output: 3  (1,3,5)
+System.out.println(findLengthOfLCIS(new int[]{2, 2, 2, 2, 2})); // Output: 1  (single elements are valid)
+System.out.println(findLengthOfLCIS(new int[]{1, 2, 3, 4, 5})); // Output: 5  (entire array is increasing)
+System.out.println(findLengthOfLCIS(new int[]{}));              // Output: 0  (empty array)
+System.out.println(numberOfArithmeticSlices(new int[]{1, 2, 3, 4})); // Output: 3
+System.out.println(numberOfArithmeticSlices(new int[]{1, 2, 3, 5, 7})); // Output: 2
+System.out.println(numberOfArithmeticSlices(new int[]{1, 3, 5, 7, 9})); // Output: 6
+
     }
 }
