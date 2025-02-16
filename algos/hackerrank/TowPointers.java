@@ -89,4 +89,25 @@ public class TowPointers {
         }
         return max;
     }
+
+    public static int trap(int[] height) {
+        if (height == null || height.length < 3) return 0;
+
+        int left = 0, right = height.length-1;
+        int leftMax = height[left];
+        int rightMax = height[right];
+        int water = 0;
+        while(left< right){
+            if(leftMax < rightMax){
+                left++;
+                leftMax = Math.max(leftMax,height[left]);
+                water += Math.max(0,leftMax - height[left]);
+            }else{
+                right--;
+                rightMax = Math.max(rightMax,height[right]);
+                water += rightMax-height[right];
+            }
+        }
+        return water;
+    }
 }
