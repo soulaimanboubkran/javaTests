@@ -1,4 +1,4 @@
-package algos.hackerrank;
+package algos.LeetCode;
 
 public class DoublyLinkedList {
     static class DoublyLinkedListNode {

@@ -1,4 +1,4 @@
-package algos.hackerrank;
+package algos.LeetCode;
 import java.util.*;
 public class TowPointers {
     

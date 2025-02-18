@@ -1,4 +1,4 @@
-package algos.hackerrank;
+package algos.LeetCode;
 import java.io.*;
 import java.math.*;
 import java.security.*;
