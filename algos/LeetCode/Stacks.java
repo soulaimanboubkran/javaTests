@@ -22,6 +22,47 @@ public class Stacks {
     }
     return stack.isEmpty();
 }
+public static List<String> generateParenthesis(int n) {
+
+    
+       return null; 
+}
+public static int evalRPN(String[] tokens) {
+         Stack<Integer> stack = new Stack<>();
+  
+
+         for(String s : tokens){
+           if(!s.equals("+") && !s.equals("-") && !s.equals("*") && !s.equals("/")){
+                stack.push(Integer.parseInt(s));
+           }else{
+            int nbr2 = stack.pop();
+            int nbr1 = stack.pop();
+            int res = 0;
+
+            switch (s) {
+                case "+":
+                    res = nbr1 + nbr2;
+                    break;
+                case "-":
+                    res = nbr1 - nbr2;
+                    break;
+                case "*":
+                    res = nbr1 * nbr2;
+                    break;
+                case "/":
+            
+                    res = nbr1 / nbr2;
+                    
+                    break;
+            
+                
+                    
+            }
+            stack.push(res);
+           }
+         }
+         return stack.pop();
+}
 
 
 
@@ -65,5 +106,9 @@ public class MinStack{
 
 
 }
+
+
+
+
 
 }
