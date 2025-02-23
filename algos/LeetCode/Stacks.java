@@ -132,7 +132,39 @@ public static int evalRPN(String[] tokens) {
          return stack.pop();
 }
 
+public int carFleet(int target, int[] position, int[] speed) {
+       int n = position.length;
+       if(n == 1 ) return 1;
 
+        // Step 1: Create a list of cars (position, timeToTarget)
+       double[][] cars = new double[n][2];
+       for(int i = 0 ; i < n ; i++){
+        cars[i][0] = position[i];
+        cars[i][1] = (double) (target - position[i]) / speed[i];  // Fix integer division
+
+       }
+       // Sort by position descending
+       Arrays.sort(cars,(a,b)->Double.compare(b[0], a[0]));
+
+       Stack<Double> stack = new Stack<>();
+       for(double[] car : cars){
+           double time = car[1];
+
+           // the fleet happed when there is individual car or the prev car will rich to the target faster
+           if(stack.isEmpty() || time > stack.peek()){
+            stack.push(time);
+           }
+       }
+
+       return stack.size();
+
+}
+
+
+
+
+
+//---------------------------------------------------------------------
 
 public class MinStack{
     private Node head;
