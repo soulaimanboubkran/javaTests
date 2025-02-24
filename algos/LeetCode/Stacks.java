@@ -161,9 +161,32 @@ public int carFleet(int target, int[] position, int[] speed) {
 }
 
 
-
-
-
+public int largestRectangleArea(int[] heights) {
+    Stack<Integer> stack = new Stack<>(); // Stack to store indices of histogram bars
+    int maxArea = 0; // Variable to track the maximum rectangle area
+    int n = heights.length; // Length of the histogram array
+    
+    // Iterate through each bar, including an extra iteration (i == n) to process remaining bars
+    for (int i = 0; i <= n; i++) {
+        int h = (i == n) ? 0 : heights[i]; // If at the end, treat height as 0 to clear stack
+        
+        // Process the stack when the current height is smaller than the height at stack's top
+        while (!stack.isEmpty() && h < heights[stack.peek()]) {
+            int height = heights[stack.pop()]; // Get the height of the popped bar
+            
+            // Determine the width of the largest rectangle using this height
+            int width = stack.isEmpty() ? i : i - stack.peek() - 1;
+            
+            // Update the maximum area found so far
+            maxArea = Math.max(maxArea, height * width);
+        }
+        
+        // Push the current index onto the stack
+        stack.push(i);
+    }
+    
+    return maxArea; // Return the largest found rectangle area
+}
 //---------------------------------------------------------------------
 
 public class MinStack{
