@@ -279,7 +279,110 @@ public class LinkedList {
         
         return -1; // If no merge node exists, which is not expected as per the problem
     }
+
+
+  static  class Node {
+        int val;
+        Node next;
+        Node random;
     
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+    }
+
+    public static Node copyRandomList(Node head) {
+        // If the head is null, return null (edge case: empty list)
+        if (head == null) {
+            return null;
+        }
+    
+        // Create a HashMap to store the mapping between original nodes and their clones
+        HashMap<Node, Node> hm = new HashMap<>();
+        
+        // Initialize the current pointer to traverse the original list
+        Node current = head;
+        
+        // Create a clone of the head node and store it in the hashmap
+        hm.put(current, new Node(current.val));
+    
+        // Traverse the original list to clone the nodes and their relationships
+        while (current != null) {
+            // Get the cloned node from the hashmap
+            ////===> here it begins our clone LinkedList
+            Node currentClone = hm.get(current);
+    
+            // If the random pointer is not null and hasn't been cloned yet, create and store it
+            if (current.random != null && !hm.containsKey(current.random)) {
+                hm.put(current.random, new Node(current.random.val));
+            }
+            
+            // Retrieve the cloned random node (if it exists)
+            Node randomClone = hm.get(current.random);
+            
+            // Assign the cloned random node to the current cloned node
+            currentClone.random = randomClone;
+    
+            // If the next pointer is not null and hasn't been cloned yet, create and store it
+            if (current.next != null && !hm.containsKey(current.next)) {
+                hm.put(current.next, new Node(current.next.val));
+            }
+            
+            // Retrieve the cloned next node (if it exists)
+            Node nextClone = hm.get(current.next);
+            
+            // Assign the cloned next node to the current cloned node
+            currentClone.next = nextClone;
+    
+            // Move to the next node in the original list
+            current = current.next;
+        }
+        
+        // Return the cloned head node from the hashmap
+        return hm.get(head);
+    }
+    
+    public class ListNode {
+             int val;
+             ListNode next;
+             ListNode() {}
+             ListNode(int val) { this.val = val; }
+             ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+         }
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0); // Dummy node to simplify the result list
+        ListNode current = dummy; // Pointer to track the current node
+        int carry = 0; // Variable to store carry
+
+         while(l1 != null || l2 != null){
+
+             int sum = carry; // Start with the carry value
+
+            if(l1 != null){
+                sum += l1.val;
+                l1 = l1.next;
+            }
+
+            
+            if(l2 != null){
+                sum += l2.val;
+                l2 = l2.next;
+            }
+            carry = sum / 10; // Carry for the next iteration
+            current.next = new ListNode(sum % 10); // Create new node with the last digit of sum
+            current = current.next; // Move to the next node
+         } 
+         
+         // If there's a carry left, add an extra node
+        if (carry > 0) {
+            current.next = new ListNode(carry);
+        }
+
+        return dummy.next; // Return the real head of the resulting list
+    }
+
     public static void main(String[] args) {
         // Create linked list
         SinglyLinkedList list = new SinglyLinkedList();
