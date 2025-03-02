@@ -383,6 +383,33 @@ public class LinkedList {
         return dummy.next; // Return the real head of the resulting list
     }
 
+
+    public static int findDuplicate(int[] nums) {
+        int slow = nums[0];
+        int fast = nums[0];
+
+        while(true){
+            // here we are just jumping between indexes(main values as index to the next asignement )
+            //We are treating the values in nums as indexes and "jumping" between them, just like navigating a linked list.
+            slow = nums[slow]; // Move slow by one step
+            fast = nums[nums[fast]];// Move fast by two steps
+            if(slow == fast){//cycle detected
+                break;
+            }
+
+        }
+        
+        //then we should set the slow to the first value sow now we can applay the Floyd's algo to find the intersection point 
+        slow = nums[0];
+        while (slow != fast) { // Move both pointers at the same pace
+            slow = nums[slow]; 
+            fast = nums[fast];
+        }
+
+
+        return slow;
+    }
+
     public static void main(String[] args) {
         // Create linked list
         SinglyLinkedList list = new SinglyLinkedList();
