@@ -410,6 +410,77 @@ public class LinkedList {
         return slow;
     }
 
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null || k == 1 ) return head;
+
+        ListNode dummy = new  ListNode(0);
+        dummy.next = head;
+
+        ListNode prevGroupEnd = dummy;
+        ListNode current = head;
+
+        int count = 0;
+        while(current != null ){
+            count++;
+            current = current.next;
+        }
+
+        current = head;
+        while(count >= k){
+            ListNode groupStart = current;
+            ListNode prev = null;
+            ListNode next = null;
+            // Reverse k nodes
+            for(int i = 0 ; i < k ; i++){
+                next = current.next;
+                current.next = prev;
+                prev = current;
+                current = next;
+
+            }
+            // Connect previous group's end to new group's start
+            prevGroupEnd.next = prev;
+            groupStart.next = current;
+            prevGroupEnd = groupStart;
+             count -= k;
+        }
+         return dummy.next;
+
+    }
+    public ListNode reverseKGroup2(ListNode head, int k) {
+        if (head == null || k == 1) return head;
+
+        // Count the number of nodes
+        ListNode temp = head;
+        int count = 0;
+        while (temp != null) {
+            count++;
+            temp = temp.next;
+        }
+
+        // If fewer than k nodes, return head as it is
+        if (count < k) return head;
+
+        // Reverse first k nodes
+        ListNode prev = null, curr = head, next = null;
+        int num = 0;
+        while (num < k && curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            num++;
+        }
+
+        // Connect reversed part to the remaining nodes
+        if (next != null) {
+            head.next = reverseKGroup(next, k);
+        }
+
+        // New head of reversed part
+        return prev;
+    }
+
     public static void main(String[] args) {
         // Create linked list
         SinglyLinkedList list = new SinglyLinkedList();
