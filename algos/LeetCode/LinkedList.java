@@ -474,7 +474,7 @@ public class LinkedList {
 
         // Connect reversed part to the remaining nodes
         if (next != null) {
-            head.next = reverseKGroup(next, k);
+            head.next = reverseKGroup2(next, k);
         }
 
         // New head of reversed part
