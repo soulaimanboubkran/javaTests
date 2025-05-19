@@ -89,3 +89,43 @@ public static String angryProfessor(int k, List<Integer> a) {
         // Convert primitive array to List
         return Arrays.asList(result[0], result[1]);
     }
+
+
+    public static int diagonalDifference(List<List<Integer>> arr) {
+    int n = arr.size();
+    int primaryDiagonal = 0;
+    int secondaryDiagonal = 0;
+    
+    for (int i = 0; i < n; i++) {
+        primaryDiagonal += arr.get(i).get(i);
+        //from the last item reduce by one every itiration
+        secondaryDiagonal += arr.get(i).get(n - 1 - i);
+    }
+    
+    return Math.abs(primaryDiagonal - secondaryDiagonal);
+}
+
+}
+
+public static int birthday(List<Integer> s, int d, int m) {
+    // Write your code here
+    
+        int count = 0;
+           if (s.size() < m) {
+        return 0;
+    }
+        for(int i= 0 ; i <= s.size() - m;i++){
+        int sum = 0;
+
+        //make sum in a range of m with initial index i
+        for (int j = i; j < i + m; j++) {
+            sum += s.get(j);
+        }
+        if(sum == d){
+            count++;
+        }
+       }
+      return count;
+    }
+
+}
