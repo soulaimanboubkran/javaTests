@@ -129,3 +129,67 @@ public static int birthday(List<Integer> s, int d, int m) {
     }
 
 }
+
+public static int divisibleSumPairs(int n, int k, List<Integer> ar) {
+    // This map will keep track of remainders we've seen so far
+    Map<Integer, Integer> remainderCounts = new HashMap<>();
+    int pairCount = 0;
+    
+    // Process each number in the array one by one
+    for (int num : ar) {
+        // Calculate the remainder when this number is divided by k
+        int remainder = num % k;
+        
+        // Calculate what remainder we need to find to make a sum divisible by k
+        // If current number gives remainder 'r', we need numbers with remainder 'k-r'
+        int complementRemainder = (k - remainder) % k;
+        
+        // Check if we've seen numbers with the complement remainder before
+        // If yes, they can form pairs with our current number
+        if (remainderCounts.containsKey(complementRemainder)) {
+            pairCount += remainderCounts.get(complementRemainder);
+        }
+        
+        // Add the current remainder to our map
+        remainderCounts.put(remainder, remainderCounts.getOrDefault(remainder, 0) + 1);
+    }
+    
+    return pairCount;
+}
+
+public static int migratoryBirds(List<Integer> arr) {
+    // Create an array to count the occurrences (frequency) of each bird type.
+    // Since bird types are only between 1 and 5, we create an array of size 6.
+    // Index 0 is unused so that the bird type number matches the index directly.
+    int[] birdCounts = new int[6]; // birdCounts[1] to birdCounts[5] will be used.
+
+    // Count the frequency of each bird type from the input list
+    for (int birdType : arr) {
+        // Increment the count of this bird type
+        birdCounts[birdType]++;
+    }
+
+    // Variable to keep track of the highest frequency we've seen
+    int maxFrequency = 0;
+
+    // Variable to store the bird type with the highest frequency
+    int mostFrequentBirdType = 0;
+
+    // Loop through bird types from 1 to 5
+    // This order ensures that in case of a tie, the smallest ID is chosen
+    for (int type = 1; type <= 5; type++) {
+        // If the current type has a higher frequency than what we’ve seen so far
+        if (birdCounts[type] > maxFrequency) {
+            // Update max frequency
+            maxFrequency = birdCounts[type];
+            // Update the most frequent bird type to the current one
+            mostFrequentBirdType = type;
+        }
+        // NOTE: If the frequency is equal (==), we do nothing.
+        // Since we're looping from smallest to largest type ID,
+        // the first type with that max frequency is kept (smallest one).
+    }
+
+    // Return the bird type with the highest frequency
+    return mostFrequentBirdType;
+}
