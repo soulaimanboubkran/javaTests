@@ -4,7 +4,23 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class Arraysds {
+public int countWords(String sentence) {
+        if (sentence == null || sentence.trim().isEmpty()) {
+            return 0;
+        }
 
+        String cleanSentence = sentence.replaceAll("[^a-zA-Z0-9\\s]", " ");
+        String[] words = cleanSentence.trim().split("\\s+");
+
+        int count = 0;
+        for (String word : words) {
+            if (!word.trim().isEmpty()) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
     public static List<Integer> reverseArray(List<Integer> a) {
 
         // sow this one iterates only half the array and swaps the elements from the
@@ -91,8 +107,19 @@ public class Arraysds {
             result.add(map.getOrDefault(q,0));
         }
         
-
-
+ public static int Max(List<Integer> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        int max = list.get(0);
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i) > max) {
+                max = list.get(i);
+            }
+        }
+        
+        return max;
+    }
         return result;
         }
 

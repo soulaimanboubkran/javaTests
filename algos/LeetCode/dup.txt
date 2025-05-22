@@ -1,0 +1,65 @@
+Je vais expliquer l'algorithme interne de **LinkedHashSet** et comment il fonctionne pour supprimer les doublons :
+
+Voici l'algorithme interne de **LinkedHashSet** pour la suppression des doublons :
+
+## Principe de LinkedHashSet :
+
+LinkedHashSet = **HashSet** (détection rapide des doublons) + **Liste doublement chaînée** (préservation de l'ordre)
+
+## Algorithme d'ajout (cœur de la suppression des doublons) :
+
+```java
+public boolean add(T element) {
+    // ÉTAPE 1: Calculer le hash de l'élément
+    int hash = element.hashCode();
+    int index = hash & (capacity - 1);
+    
+    // ÉTAPE 2: Vérifier si l'élément existe déjà (DÉTECTION DES DOUBLONS)
+    Node current = table[index];
+    while (current != null) {
+        if (current.hash == hash && current.data.equals(element)) {
+            return false; // DOUBLON TROUVÉ - Ne pas ajouter
+        }
+        current = current.next;
+    }
+    
+    // ÉTAPE 3: Ajouter le nouvel élément
+    // 3a. Dans la table de hachage (pour la détection rapide)
+    // 3b. Dans la liste chaînée (pour l'ordre d'insertion)
+    
+    return true; // Élément ajouté avec succès
+}
+```
+
+## Structure de données interne :
+
+1. **Table de hachage** : Array de Node[] pour accès O(1)
+2. **Liste doublement chaînée** : Node.before/after pour l'ordre
+3. **Nœuds hybrides** : Chaque Node a :
+   - `next` : pour la table de hachage (collisions)
+   - `before/after` : pour la liste ordonnée
+
+## Étapes pour `removeDuplicates()` :
+
+```java
+LinkedHashSet<Integer> set = new LinkedHashSet<>();
+for (int num : nums) {
+    set.add(num); // Ajoute seulement si pas de doublon
+}
+return new ArrayList<>(set); // Convertit en préservant l'ordre
+```
+
+## Pourquoi c'est efficace :
+
+1. **Détection des doublons** : O(1) grâce au hachage
+2. **Préservation de l'ordre** : Liste chaînée maintient l'ordre d'insertion
+3. **Complexité globale** : O(n) pour traiter n éléments
+
+## Avantages de LinkedHashSet :
+
+- **Pas de doublons** automatiquement
+- **Ordre préservé** (contrairement à HashSet)
+- **Performance optimale** O(n)
+- **Simple à utiliser** : juste `add()` et conversion
+
+L'algorithme combine intelligemment deux structures pour obtenir le meilleur des deux mondes : la rapidité du hachage et la préservation de l'ordre d'une liste chaînée.
