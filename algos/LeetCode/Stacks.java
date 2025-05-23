@@ -45,7 +45,6 @@ private void backtrack(List<String> res,Stack<Character> stack ,int openCount,in
     if(openCount < n){
         stack.push('(');
         backtrack(res, stack, openCount + 1, closeCount, n);
-        //this one is responsable of the pop up the last element in the stack sow when we rich openCount < closeCount sow it can now add something and start again new option 
         stack.pop();// Backtrack
 
     }
@@ -56,25 +55,7 @@ private void backtrack(List<String> res,Stack<Character> stack ,int openCount,in
 
     }
 }
-/*
- * "This part is responsible for popping the last element from the stack. When openCount < closeCount, it means we can now add a new element and start exploring a different option."
 
-Breaking it Down for Clarity
-"this one is responsable" → "This part is responsible"
-"responsable" is incorrect spelling; it should be "responsible."
-"of the pop up the last element" → "for popping the last element"
-"pop up" is incorrect; in programming, we say "popping" when removing from a stack.
-"in the stack sow when we rich" → "from the stack. When we reach"
-"sow" should be "so" (but "so" isn't needed here).
-"rich" should be "reach."
-"openCount < closeCount sow it can now add something" → "When openCount < closeCount, it means we can now add a new element"
-"sow" should be "so."
-"add something" is too vague; I replaced it with "add a new element."
-"and start again new option" → "and start exploring a different option."
-"start again new option" is incorrect phrasing.
-"start exploring a different option" is a clearer way to express the idea.
- * 
- */
 
 
  public int[] dailyTemperatures(int[] temperatures) {
