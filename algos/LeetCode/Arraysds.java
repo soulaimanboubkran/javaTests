@@ -4,6 +4,168 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class Arraysds {
+     public int[][] merge(int[][] intervals) {
+      if (intervals.length <= 1) return intervals;
+         // Step 1: Sort by start time
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        List<int[]> merged = new ArrayList<>();
+        // Step 2: Iterate and merge
+        int[] current = intervals[0];
+        merged.add(current);
+
+
+        for(int[] interval : intervals){
+            int currentEnd = current[1];
+            int nextStart = interval[0];
+            int nextEnd = interval[1];
+
+            if (nextStart <= currentEnd) {
+                // Overlapping: merge
+                current[1] = Math.max(currentEnd, nextEnd);
+            } else {
+                // No overlap: add new interval
+                current = interval;
+                merged.add(current);
+            }
+        }
+         return merged.toArray(new int[merged.size()][]);
+    }
+ public String longestCommonPrefix(String[] strs) {
+        if(strs.length == 0 ) return "";
+        String prefix = strs[0];
+
+        for(int i = 1 ; i < strs.length ; i++){
+            while(strs[i].indexOf(prefix) != 0){
+                prefix = prefix.substring(0,prefix.length() - 1);
+            }
+        }
+        return prefix;
+    }
+  public int missingNumber(int[] nums) {
+        int n = nums.length;
+        int expectedSum = n * (n + 1) / 2;
+        int actualSum = 0;
+
+        for (int num : nums) {
+            actualSum += num;
+        }
+
+        return expectedSum - actualSum;
+    }
+
+
+    class Solution {
+public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k %= n; // In case k > n
+
+        // Step 1: Reverse the whole array
+        reverse(nums, 0, n - 1);
+
+        // Step 2: Reverse the first k elements
+        reverse(nums, 0, k - 1);
+
+        // Step 3: Reverse the remaining n-k elements
+        reverse(nums, k, n - 1);
+    }
+
+    private void reverse(int[] nums, int left, int right) {
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
+        }
+    }
+    
+    public static int[] rotateRightExtraSpace(int[] arr, int k) {
+        if (arr.length == 0) return arr;
+        
+        int n = arr.length;
+        k = k % n; // Handle k > n
+        
+        int[] result = new int[n];
+        
+        // Copy elements to their new positions
+        for (int i = 0; i < n; i++) {
+            result[(i + k) % n] = arr[i];
+        }
+        
+        return result;
+    }
+}
+     
+ /**
+     * Basic approach to check if array is sorted in ascending order.
+     * Time Complexity: O(n), Space Complexity: O(1)
+     * 
+     * @param arr Array of integers
+     * @return true if sorted in ascending order, false otherwise
+     */
+    public static boolean isSortedAscending(int[] arr) {
+        if (arr.length <= 1) {
+            return true;
+        }
+        
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < arr[i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * Check if array is sorted in descending order.
+     * Time Complexity: O(n), Space Complexity: O(1)
+     * 
+     * @param arr Array of integers
+     * @return true if sorted in descending order, false otherwise
+     */
+    public static boolean isSortedDescending(int[] arr) {
+        if (arr.length <= 1) {
+            return true;
+        }
+        
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > arr[i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static Integer findSecondLargestOptimized(int[] arr) {
+        if (arr.length < 2) {
+            return null;
+        }
+        
+        // Use HashSet to get unique elements
+        HashSet<Integer> uniqueElements = new HashSet<>();
+        for (int num : arr) {
+            uniqueElements.add(num);
+        }
+        
+        if (uniqueElements.size() < 2) {
+            return null;
+        }
+        
+        // Track largest and second largest
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
+        
+        for (int num : uniqueElements) {
+            if (num > largest) {
+                secondLargest = largest;
+                largest = num;
+            } else if (num > secondLargest) {
+                secondLargest = num;
+            }
+        }
+        
+        return secondLargest == Integer.MIN_VALUE ? null : secondLargest;
+    }
 public int countWords(String sentence) {
         if (sentence == null || sentence.trim().isEmpty()) {
             return 0;

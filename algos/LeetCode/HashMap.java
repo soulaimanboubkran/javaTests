@@ -1,8 +1,27 @@
+package algos.LeetCode;
+
 
 import java.util.*;
 public class HashMap {
 
+/**
+     * Basic HashMap approach to count character frequencies.
+     * Time Complexity: O(n), Space Complexity: O(k) where k is unique characters
+     * 
+     * @param str Input string
+     * @return HashMap with character frequencies
+     */
+    public static HashMap<Character, Integer> countFrequencyHashMap(String str) {
+        HashMap<Character, Integer> frequencyMap = new HashMap<>();
+        
+        for (char c : str.toCharArray()) {
+            frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+        }
+        
+        return frequencyMap;
+    }
 
+    
       public static int birthdayCakeCandles(List<Integer> candles) {
     // Write your code here
     Map<Integer,Integer> frequencyMap = new HashMap<>();
@@ -16,7 +35,6 @@ public class HashMap {
 
     return frequencyMap.get(maxHeight);
     }
-}
 
 
 public static String angryProfessor(int k, List<Integer> a) {
